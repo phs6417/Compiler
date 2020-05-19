@@ -1,0 +1,58 @@
+/*
+
+		컴파3장 정규식과 오토마타 - 수정 23/42
+*/
+
+
+#include <stdio.h>
+
+#define STATES	8	/* number of states */
+#define SYMBOLS	2	/* number of symbols */
+
+
+int ST_TAB[STATES][SYMBOLS] = {
+	/* S       */   { 1, -1},
+	/* state A */	{ 4, 5 },
+	/* state C */	{ 3, -1 },
+	/* state D */	{ -1, 2 },
+	/* state E */	{ 4, 7 },
+	/* state F */	{ 3, 6 },
+	/* state G */	{ -1, 7 },
+	/* state H */	{ 3, 7 }
+
+};
+
+void put_table(int tab[][SYMBOLS], int m, int n)
+{
+	int i;
+
+	puts("State Transition Table");
+	puts("\t0\t1");
+	for (i = 0; i < m; i++)
+		printf("%c\t%c\t%c\n",
+			'A'+i, 'A'+tab[i][0], 'A'+tab[i][1]);
+	puts(" A가 S 이고 , B가 A 라 보면 된다. " );
+	puts("Final states = { C,D,F,G,H }");
+
+		
+}
+
+void main()
+{
+	int ch;	/* input symbol */
+	int cur_state=0;	/* start state */
+
+	put_table(ST_TAB, STATES, SYMBOLS);
+
+	ch = getchar();
+	while (ch != '\n') {
+		cur_state = ST_TAB[cur_state][ch-'0'];
+		if (cur_state < 0) { puts("FAIL"); return; }
+		ch = getchar();
+	}
+
+	if (cur_state == 2 || cur_state ==3 || cur_state == 5 
+	|| cur_state ==6 || cur_state ==7) 
+		puts("OK");	/* final states = { 2,3,5,6,7 } */
+	else puts("FAIL");
+}

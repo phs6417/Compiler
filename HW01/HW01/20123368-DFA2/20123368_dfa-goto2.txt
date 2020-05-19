@@ -1,0 +1,89 @@
+/*
+	
+
+		컴파3장 정규식과 오토마타 - 수정 23/42
+
+
+*/
+#include <stdio.h>
+
+#define FAIL 0;
+#define OKAY 1;
+
+int ch;
+
+int dfa()
+{
+	ch = getchar();
+	S:
+		if (ch == 'a') {
+			ch = getchar();
+			goto A;
+		} else return FAIL;
+	A:
+		if (ch == 'a') {
+			ch = getchar();
+			goto E;
+		} else if (ch == 'b') {
+			ch = getchar();
+			goto F;
+		} else return FAIL;
+	C:
+		if (ch == 'a') {
+			ch = getchar();
+			goto D;
+		} else if (ch == '\n') {
+			return OKAY;
+		} else return FAIL;
+	D:
+		if (ch == 'b') {
+			ch = getchar();
+			goto C;
+		} else if (ch == '\n') {
+			return OKAY;
+		} else return FAIL;
+	E:
+		if (ch == 'a') {
+			ch = getchar();
+			goto E;
+		} else if (ch == 'b') {
+			ch = getchar();
+			goto H;
+		} else return FAIL;
+	F:
+		if (ch == 'a') {
+			ch = getchar();
+			goto D;
+		} else if (ch == 'b') {
+			ch = getchar();
+			goto G;
+		} else if (ch == '\n') {
+			return OKAY;
+		} else return FAIL;
+	G:
+		if (ch == 'b') {
+			ch = getchar();
+			goto H;
+		} else if (ch == '\n') {
+			return OKAY;
+		} else return FAIL;
+	H:
+		if (ch == 'a') {
+			ch = getchar();
+			goto D;
+		} else if (ch == 'b') {
+			ch = getchar();
+			goto H;
+		} else if (ch == '\n') {
+			return OKAY;
+		} else return FAIL;
+	
+
+}
+
+main()
+{
+	if (dfa())
+		puts("OK");
+	else puts("FAIL");
+}
